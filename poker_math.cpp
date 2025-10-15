@@ -33,6 +33,26 @@ card_set_t PokerMath::kth_hand(int size, int index)
 	return all_hands[size-1][index];
 }
 
+int PokerMath::hand_id(card_set_t hand)
+{
+	int count=hand.count();
+	int id=0;
+
+	for(int i=0;i<CARDS&&count;i++)
+	{
+		if(!hand.test(i))
+		{
+			id+=n_choose_k(CARDS-i, count-1);
+		}
+		else
+		{
+			count--;
+		}
+	}
+
+	return id;
+}
+
 void PokerMath::generate_all_hands()
 {
 	for(int size=1;size<=5;size++)

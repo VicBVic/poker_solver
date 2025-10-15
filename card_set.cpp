@@ -25,7 +25,6 @@ std::istream &operator>>(std::istream &is, card_set_t &cards)
 
 	while(p)
 	{
-		std::cerr<<"here "<<p<<'\n';
 		if(strlen(p) != 2)
 		{
 			is.setstate(std::ios::failbit);
@@ -41,6 +40,7 @@ std::istream &operator>>(std::istream &is, card_set_t &cards)
 		cards.set(bit_of_rank_suit(rank, suit));
 		p = strtok(nullptr, " ");
 	}
+
 
 	return is;
 }

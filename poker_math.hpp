@@ -17,5 +17,6 @@ public:
 
 	static u_int64_t n_choose_k(int n, int k);
 	static card_set_t kth_hand(int size, int index);
+	static int hand_id(card_set_t hand);
 
 };

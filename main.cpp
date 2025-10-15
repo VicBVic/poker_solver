@@ -50,9 +50,9 @@ int main()
 	time = clock();
 	EVResponse result = EVSolver::get_heads_up_ev(hero, villain, cards);
 
-	cout<<"Done in "<<time/1000.0<<" ms \n";
+	cout<<"Done in "<<(clock()-time)/1000.0<<" ms \n";
 
 	cout<<"Hero wins "<<result.win_percentage<<"% of runouts\n";
-	cout<<"Hero draws "<<result.draw_percentage<<"% of drawouts\n";
+	cout<<"Hero draws "<<result.draw_percentage<<"% of runouts\n";
 	return 0;
 }

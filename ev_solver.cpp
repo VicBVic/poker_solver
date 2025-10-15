@@ -2,9 +2,24 @@
 #include "poker_math.hpp"
 #include "card_set.hpp"
 
+#include <filesystem>
+#include <cassert>
+
+
+const char EVSolver::heads_up_matrix_location[] = "data/heads_up_matrix";
+int EVSolver::heads_up_matrix[2][total_hole_combinations][total_hole_combinations];
 
 void EVSolver::init()
 {
+	if(std::filesystem::exists(heads_up_matrix_location))
+	{
+		read_heads_up_matrix();
+	}
+	else
+	{
+		calculate_heads_up_matrix();
+		save_heads_up_matrix();
+	}
 	return;
 }
 
@@ -13,9 +28,27 @@ void EVSolver::calculate_heads_up_matrix()
 	return;
 }
 
-void EVSolver::read_heads_up_matrix(const char *filename)
+void EVSolver::read_heads_up_matrix()
 {
-	return;
+	FILE *in = fopen(heads_up_matrix_location,"rb");
+	assert(in);
+
+	int read_bytes = fread(heads_up_matrix, 1, sizeof(heads_up_matrix), in);
+	assert(read_bytes == sizeof(heads_up_matrix));
+
+	assert(fclose(in)==0);
+}
+
+void EVSolver::save_heads_up_matrix()
+{
+	FILE *out = fopen(heads_up_matrix_location, "wb");
+
+	assert(out);
+
+	int checksum = fwrite(heads_up_matrix, 1, sizeof(heads_up_matrix), out);
+	assert(checksum == sizeof(heads_up_matrix));
+
+	assert(fclose(out)==0);
 }
 
 EVResponse EVSolver::get_heads_up_ev(card_set_t hero_cards, card_set_t villain_cards, card_set_t community_cards)
