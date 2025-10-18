@@ -52,7 +52,7 @@ int main()
 
 	cout<<"Done in "<<(clock()-time)/1000.0<<" ms \n";
 
-	cout<<"Hero wins "<<result.win_percentage<<"% of runouts\n";
-	cout<<"Hero draws "<<result.draw_percentage<<"% of runouts\n";
+	cout<<"Hero wins "<<result.win_percentage<<"% ("<<result.winning_hands<<") of runouts\n";
+	cout<<"Hero draws "<<result.draw_percentage<<"% ("<<result.drawing_hands<<") of runouts\n";
 	return 0;
 }

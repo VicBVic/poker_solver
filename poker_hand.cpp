@@ -106,7 +106,7 @@ poker_hand_t best_four_of_a_kind(card_set_t cards)
 		{
 			best_hand = FOUR<<20; // adaug categoria
 			best_hand |= rank<<16; // adaug valoarea mainii
-			best_hand |= get_kickers(cards & ~four, 1); // adaug kickerul
+			best_hand |= (get_kickers(cards & ~four, 1)<<12); // adaug kickerul
 			break;
 		}
 	}
@@ -148,7 +148,6 @@ poker_hand_t best_flush(card_set_t cards)
 		{
 			this_colored_hand = FLUSH<<20; // adaug categoria
 			this_colored_hand |= get_kickers(suited_cards, 5); // adaug kickerul
-			break;
 		}
 
 		best_hand = max(best_hand, this_colored_hand);
@@ -183,7 +182,7 @@ poker_hand_t best_straight(card_set_t cards)
 		if(straight && !filter_rank(cards, 12).none())
 		{
 			best_hand = STRAIGHT<<20; // adaug categoria
-			best_hand |= 3<<16; // adaug valoarea mainii (5 high)
+			best_hand |= (3<<16); // adaug valoarea mainii (5 high)
 		}
 	}
 
@@ -200,7 +199,7 @@ poker_hand_t best_three_of_a_kind(card_set_t cards)
 		{
 			best_hand = THREE<<20; // adaug categoria
 			best_hand |= rank<<16; // adaug valoarea mainii
-			best_hand |= get_kickers(cards & ~three, 2); // adaug kickerul
+			best_hand |= (get_kickers(cards & ~three, 2))<<8; // adaug kickerul
 			break;
 		}
 	}
@@ -243,7 +242,7 @@ poker_hand_t best_one_pair(card_set_t cards)
 		{
 			best_hand = ONE_PAIR<<20; // adaug categoria
 			best_hand |= rank<<16; // adaug valoarea mainii
-			best_hand |= get_kickers(cards & ~pair, 3); // adaug kickerul
+			best_hand |= (get_kickers(cards & ~pair, 3))<<4; // adaug kickerul
 			break;
 		}
 	}

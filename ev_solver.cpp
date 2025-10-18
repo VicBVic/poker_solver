@@ -1,6 +1,7 @@
 #include "ev_solver.hpp"
 #include "poker_math.hpp"
 #include "card_set.hpp"
+#include "card_format.hpp"
 
 #include <filesystem>
 #include <cassert>
@@ -75,18 +76,27 @@ EVResponse EVSolver::get_heads_up_ev(card_set_t hero_cards, card_set_t villain_c
 		poker_hand_t hero_best = best_poker_hand(all_hero);
 		poker_hand_t villain_best = best_poker_hand(all_villain);
 		
+		if(hero_best.none()&&villain_best.none())
+		{
+			hero_best = get_kickers(all_hero, 5);
+			villain_best = get_kickers(all_villain, 5);
+		}
+
 		if(hero_best > villain_best)
 		{
 			response.winning_hands++;
+			//std::cerr<<"Hero wins!\n";
 		}
 		else if(hero_best == villain_best)
-		{
-			int high_card_cmp = compare_high_card(all_hero, all_villain);
-			
-			if(high_card_cmp > 0) response.winning_hands++;
-			else if(high_card_cmp == 0) response.drawing_hands++;
+		{	
+			response.drawing_hands++;
+			//std::cerr<<"Tie!\n";
 		}
-		
+		else
+		{
+			//std::cerr<<"Villain wins!\n";
+		}
+
 		response.total_hands++;
 	}
 
