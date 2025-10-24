@@ -1,0 +1,20 @@
+{
+  "name": "poker_client",
+  "version": "1.0.0",
+  "description": "a simple poker client",
+  "main": "index.js",
+  "scripts": {
+    "test": ".test"
+  },
+  "keywords": [
+    "poker",
+    "holdem",
+    "webapp"
+  ],
+  "author": "SeeNoEvil",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0"
+  }
+}

@@ -1,20 +1,9 @@
-
 [package]
-authors = ["LongYinan <lynweklm@gmail.com>"]
-edition = "2021"
-name = "rustpokerengine"
+name = "rust_engine"
 version = "0.1.0"
-
-[lib]
-crate-type = ["cdylib"]
+edition = "2024"
 
 [dependencies]
-napi = "3.0.0"
-napi-derive = "3.0.0"
-
-[build-dependencies]
-napi-build = "2"
-
-[profile.release]
-lto = true
-strip = "symbols"
+rand = "0.9.2"
+rang = "0.1.1"
+rng = "0.1.0"
