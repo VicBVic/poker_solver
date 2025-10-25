@@ -1,49 +1,18 @@
-use std::fmt::{self, write, Display, Formatter};
-
+use rust_poker::hand_evaluator::{Hand, CARDS};
 use rand::seq::{SliceRandom};
-
-pub struct Card{
-	rank: u8,
-	suit: u8,	
-}
-
-impl Display for Card {
-	
-	fn fmt(&self, f: &mut Formatter<'_>) -> fmt::Result {
-		let suit = match self.suit {
-			1 => "Hearts",
-			2 => "Spades",
-			3 => "Clubs",
-			_ => "Diamonds"
-		};
-
-		let rank = match self.rank {
-			1 => "Ace",
-			13 => "King",
-			12 => "Queen",
-			11 => "Jack",
-			10 => "Ten",
-			_ => &self.rank.to_string()
-		};
-
-		write!(f, "{} of {}", rank, suit)
-	}
-}
 
 
 pub struct CardDeck{
-	cards: Vec<Card>
+	cards: Vec<Hand>
 }
 
 impl CardDeck{
 	pub fn new() -> Self {
 		
-		let mut cards = Vec::<Card>::new();
+		let mut cards = Vec::<Hand>::new();
 
-		for suit in 1..=4 {
-			for rank in 1..=13 {
-				cards.push(Card { rank:rank, suit: suit });
-			}
+		for i in 0..52 {
+			cards.push(CARDS[i]);
 		}
 
 
@@ -56,16 +25,16 @@ impl CardDeck{
 		self.cards.shuffle(&mut rng);
 	}
 
-	pub fn deal_top(&mut self) -> Option<Card> {
+	pub fn deal_top(&mut self) -> Option<Hand> {
 		self.cards.pop()
 	}
 
-	pub fn deal_hand(&mut self, cnt:i32) -> Vec<Card> {
-		let mut ans = Vec::<Card>::new();
+	pub fn deal_hand(&mut self, cnt:i32) -> Hand {
+		let mut ans = Hand::default();
 
 		for i in 0..cnt {
 			if !self.cards.is_empty(){
-				ans.push(self.cards.pop().expect("How"));
+				ans += self.cards.pop().expect("imposibil");
 			}
 		}
 
@@ -75,27 +44,12 @@ impl CardDeck{
 	pub fn reset(&mut self) {
 		self.cards.clear();
 
-		for suit in 1..=4 {
-			for rank in 1..=13 {
-				self.cards.push(Card { rank:rank, suit: suit });
-			}
+		for i in 0..52 {
+			self.cards.push(CARDS[i]);
 		}
 	}
 
 	pub fn burn(&mut self) {
 		self.cards.pop();
-	}
-}
-
-impl Display for CardDeck{
-	fn fmt(&self, f: &mut Formatter) ->fmt::Result{
-		
-		let mut result = fmt::Result::Ok(());
-		
-		for card in &self.cards {
-			result = result.and(write!(f, "{}; ", card));
-		}
-
-		result.and(write!(f, "\n"))
 	}
 }
